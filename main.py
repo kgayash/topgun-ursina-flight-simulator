@@ -261,6 +261,5 @@ def update():
         exit(code=None)
 
 
-
 # Run the application
 app.run()
