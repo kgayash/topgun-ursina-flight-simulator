@@ -107,7 +107,7 @@ right_landing_gear.parent = cube
 # Use FirstPersonController for player movement
 player = FirstPersonController()
 player.entity = player
-player.cursor.scale = 0.001
+player.cursor.scale = 0.000001
 player.gravity = 0  
 
 # Set up the camera to follow the player
@@ -125,14 +125,14 @@ engine_speed = 0
 global pV_speed
 pV_speed = 0
 
-
 alt_text = Text(
-    text="Altitude: 2000ft", 
+    text="Altitude: "+str(cube.y)+"ft", 
     # origin=(1, 1),  # The origin is the point of reference for positioning (top-right corner)
     position=(0.012, 0.021),  # Position it in the right top corner (relative to screen size)
     scale=0.06,  # Adjust the text size
     color=color.white  # Set the text color
     )
+
 
 vel_text = Text(
     text="Velocity: "+str(engine_speed)+"kmph", 
@@ -168,24 +168,29 @@ def update():
 
     # Code for Fly-By-Wire system
 
+    
+    # alt_text.Text = ""
+
     if held_keys['left arrow']:
-        cube.rotation_z += 50 * time.dt  # Move up
+        cube.rotation_z += 30 * time.dt  # Move up
         # cube.rotation_y += 40 * time.dt
     #     left_wing.rotation_x -= 0.12
     #     right_wing.rotation_x -= -0.12
     if held_keys['right arrow']:
         # roll_velocity += turn_speed * time.dt  # Increase roll velocity
-        cube.rotation_z -= 50 * time.dt  # Move down
+        cube.rotation_z -= 30 * time.dt  # Move down
         # left_wing.rotation_x -= -0.12
         # right_wing.rotation_x -= 0.12
         # cube.rotation_y -= 40 * time.dt
-    if held_keys['up arrow']:
-        cube.rotation_x += 30 * time.dt  # Move up
-        # cube.rotation_y += 40 * time.dt
-        # cube.y += 4 * time.dt
-        # tail_wing.rotation_x -= 0.14
+
+    if engine_speed >= 10:
+        if held_keys['up arrow']:
+            cube.rotation_x += 5 * time.dt  # Move up
+            # cube.rotation_y += 40 * time.dt
+            # cube.y += 4 * time.dt
+            # tail_wing.rotation_x -= 0.14
     if held_keys['down arrow']:
-        cube.rotation_x -= 30 * time.dt  # Move down
+        cube.rotation_x -= 5 * time.dt  # Move down
         # tail_wing.rotation_x += 0.14
         # cube.rotation_y -= 40 * time.dt
         # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
@@ -205,6 +210,9 @@ def update():
     if held_keys['k']:
         player.y -= 10 * time.dt  # Move up
 
+    alt_text.text = ""
+    alt_text.text = "Altitude: "+str(round(cube.y,1))+"feet"
+
 
     # if not held_keys['left arrow']:
     #     roll_velocity -= 5 * time.dt  # Gradually reduce the roll velocity
@@ -217,12 +225,51 @@ def update():
     # cube.z -= math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
     # cube.y -= math.cos(math.radians(cube.rotation_x)) * engine_speed * time.dt
 
-    
+    if held_keys['p']:
+        pV_speed += 1 * time.dt * 200
+
+    if pV_speed > 500:
+        APU_text = Text(
+        text="APU start completed; propeller at sufficient speed to taxi", 
+        # origin=(1, 1),  # The origin is the point of reference for positioning (top-right corner)
+        position=(-0.0195,0.01),  # Position it in the right top corner (relative to screen size)
+        scale=0.06,  # Adjust the text size
+        color=color.yellow  # Set the text color
+        )
+        # time.sleep(5)
+        # APU_text.text = 
 
     if held_keys['v']:
-        engine_speed += 1 * time.dt * 1.3
-        vel_text.text="Velocity: "+str(round(engine_speed,2))+"kmph"
-        pV_speed += 1 * time.dt * 50
+        if pV_speed > 500:
+            engine_speed += 1 * time.dt * 1.08
+            vel_text.text="Velocity: "+str(round(engine_speed,1))+"knots"
+            # pV_speed += 1 * time.dt * 50
+
+    if held_keys['b']:
+        if engine_speed > 0:
+            engine_speed -= 1 * time.dt * 1.08
+
+    if engine_speed > 1:
+        APU_text.color = color.dark_gray
+    # else:
+    #     APU_text.enabled = True    
+
+
+    if engine_speed > 10:
+        takeoff_text = Text(
+        text="Velocity above 10knots; ready to rotate for take-off", 
+        # origin=(1, 1),  # The origin is the point of reference for positioning (top-right corner)
+        position=(-0.0195,0.01),  # Position it in the right top corner (relative to screen size)
+        scale=0.06,  # Adjust the text size
+        color=color.yellow  # Set the text color
+        )
+        # time.sleep(5)
+        # APU_text.text =
+
+    if cube.y > 1:
+        takeoff_text.color = color.dark_gray
+
+
 
     # cube.x += math.sin(math.radians(cube.rotation_y)) * engine_speed * time.dt
     # cube.z += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
