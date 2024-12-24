@@ -1,14 +1,45 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 
+
 # Initialize the Ursina application
 app = Ursina()
 
+# sky = Sky(texture='Sky_gradient_mid_afternoon_looking_north')
+
+# water = Entity(model='plane', scale=(200, 1, 200), position=(0, 0, 0), texture='water', collider='box')
+
+
+# clouds = Clouds()
+
 # Create a white cube (player character)
 
-runway = Entity(model='plane', scale=(100, 1, 5), color=color.black, position=(0, 0, 0), collider='box')
+runway = Entity(model='plane', scale=(5, 1000, 5), color = color.black, position=(0, 1, 0), collider='box')
 
-runway.rotation_y = 90
+# runway.rotation_y = 90
+
+# globe = Entity(model='sphere', scale=(10000), texture = 'My1nT')
+
+# runway = Entity(model='plane', scale=(5, 1000, 5), color=color.black, position=(0, 0, 0), collider='box')
+# runway.rotation_y = 90  # Rotate to make it run east-west
+
+# # Create taxiways (smaller path sections for planes to move)
+# taxiway1 = Entity(model='plane', scale=(5, 200, 5), color=color.black, position=(20, 0, -50), collider='box')
+# taxiway2 = Entity(model='plane', scale=(5, 200, 5), color=color.black, position=(-20, 0, -150), collider='box')
+
+# # Create terminals (large rectangular building-like entities)
+# terminal = Entity(model='cube', scale=(20, 6, 20), color=color.blue, position=(0, 3, 100))
+# terminal2 = Entity(model='cube', scale=(20, 6, 20), color=color.blue, position=(100, 3, -100))
+
+# # Create a control tower (simple cylindrical entity)
+# control_tower = Entity(model='cylinder', scale=(1, 10, 1), color=color.white, position=(50, 5, 50))
+
+# # Create parking spots (rectangular entities)
+# parking_spots = []
+# for i in range(5):
+#     parking_spot = Entity(model='cube', scale=(5, 0.2, 5), color=color.green, position=(i * 15 - 25, 0.1, 100))
+#     parking_spots.append(parking_spot)
+
 
 # Create the main body of the airplane (fuselage)
 fuselage = Entity(model='cube', color=color.gray, scale=(2, 0.6, 8), position=(0, 0, 0))
@@ -18,7 +49,7 @@ left_wing = Entity(model='cube', color=color.blue, scale=(6, 0.2, 2), position=(
 right_wing = Entity(model='cube', color=color.blue, scale=(6, 0.2, 2), position=(3, 0, 0))
 
 # Create the tail wing (horizontal stabilizer) - properly connected to the fuselage
-tail_wing = Entity(model='cube', color=color.red, scale=(3, 0.3, 1), position=(0, 0.5, 4))  # Tail wing connected to fuselage
+tail_wing = Entity(model='cube', color=color.red, scale=(3, 0.3, 1), position   =(0, 0.5, 4))  # Tail wing connected to fuselage
 
 # Create the vertical stabilizer (rudder) - properly connected to the tail
 vertical_stabilizer = Entity(model='cube', color=color.red, scale=(1, 2, 1), position=(0, 1.25, 5))  # Rudder connected
@@ -66,7 +97,6 @@ right_wing.parent = cube
 tail_wing.parent = cube
 vertical_stabilizer.parent = cube
 engine_left.parent = cube
-engine_right.parent = cube
 nose_cone.parent = cube
 front_landing_gear.parent = cube
 left_landing_gear.parent = cube
@@ -82,7 +112,7 @@ player.gravity = 0
 
 # Set up the camera to follow the player
 camera.position = (0, 1, -5)
-camera.rotation = (30, 0, 0)
+# camera.rotation = (30, 0, 0)
 
 cube.rotation_y = 180
 
@@ -90,9 +120,10 @@ turn_speed = 50
 
 
 def update():
-    engine = 5
-    enginey = 1000
-    propeller.rotation_x += enginey * time.dt
+    global engine_speed
+    engine = 0
+    RVspeed = 1000
+    propeller.rotation_x += RVspeed * time.dt
     # roll_decay = 60
 
     if held_keys['v']:
@@ -100,52 +131,106 @@ def update():
 
     # roll_velocity = 2
 
-    cube.z += engine * time.dt
-    move_speed = 1  # Set move speed
+    cube.position -= cube.forward * time.dt
+
+    roll_velocity = 50
+
+    engine_speed = 0 # Set move speed
+
+    # Code for Fly-By-Wire system
+
     if held_keys['left arrow']:
         cube.rotation_z += 50 * time.dt  # Move up
         # cube.rotation_y += 40 * time.dt
+    #     left_wing.rotation_x -= 0.12
+    #     right_wing.rotation_x -= -0.12
     if held_keys['right arrow']:
         # roll_velocity += turn_speed * time.dt  # Increase roll velocity
         cube.rotation_z -= 50 * time.dt  # Move down
+        # left_wing.rotation_x -= -0.12
+        # right_wing.rotation_x -= 0.12
         # cube.rotation_y -= 40 * time.dt
     if held_keys['up arrow']:
-        cube.rotation_x += 50 * time.dt  # Move up
+        cube.rotation_x += 5 * time.dt  # Move up
         # cube.rotation_y += 40 * time.dt
-        cube.y += math.cos(math.radians(cube.rotation_y)) * move_speed * time.dt
+        # cube.y += 4 * time.dt
+        # tail_wing.rotation_x -= 0.14
     if held_keys['down arrow']:
-        cube.rotation_x -= 50 * time.dt  # Move down
+        cube.rotation_x -= 10 * time.dt  # Move down
+        # tail_wing.rotation_x += 0.14
         # cube.rotation_y -= 40 * time.dt
-        # cube.y += math.cos(math.radians(cube.rotation_y)) * move_speed * time.dt
+        # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
     if held_keys['c']:
-        cube.rotation_y += 10 * time.dt  # Move up
+        cube.rotation_y += 30 * time.dt  # Move up
         # cube.rotation_y += 40 * time.dt
     if held_keys['z']:
-        cube.rotation_y -= 10 * time.dt  # Move down
+        cube.rotation_y -= 30 * time.dt  # Move down
         # cube.rotation_y -= 40 * time.dt
-    
 
-    # if not held_keys['right arrow']:
-    #     roll_velocity -= roll_decay * time.dt  # Gradually reduce the roll velocity
+    def on_input(key):
+        if key == 'v':  # Check if the 'v ' key was pressed
+            engine_speed += 10
+
+    if held_keys['i']:
+        player.y += 10 * time.dt  # Move up
+    if held_keys['k']:
+        player.y -= 10 * time.dt  # Move up
+
+    # if held_keys['v']:
+    #     if time.time() - last_increment_time >= time_to_increment:
+    #         increment_value += increment_rate
+    #         last_increment_time = time.time()  # Update the last increment time
+
+
+    # if not held_keys['left arrow']:
+    #     roll_velocity -= 5 * time.dt  # Gradually reduce the roll velocity
     #     if abs(roll_velocity) < 0.01:  # Stop the roll motion when it's small enough
     #         roll_velocity = 0
 
-    cube.x -= math.sin(math.radians(cube.rotation_y)) * move_speed * time.dt
-    cube.z -= math.cos(math.radians(cube.rotation_y)) * move_speed * time.dt
+    # Code for angular trigonometrical craft movements that correspond to Fly-By-Wire system
+
+    cube.x -= math.sin(math.radians(cube.rotation_y)) * engine_speed * time.dt
+    cube.z -= math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
+    # cube.y -= math.cos(math.radians(cube.rotation_x)) * engine_speed * time.dt
 
 
+    # cube.x += math.sin(math.radians(cube.rotation_y)) * move_speed * time.dt
+    # cube.z += math.cos(math.radians(cube.rotation_y)) * move_speed * time.dt
+
+    # cube.position += cube.forward * speed * time.dt  # cube.forward gives the direction
 
 
     # Update the cube's position based on its rotation
     # Move the cube forward along its local z-axis
 
-    # camera.position = cube.position + Vec3(0, 5, -15)  # Follow the plane, keep distance
+    # camera.position = cube.position + Vec3(0, 5, -40)  # Follow the plane, keep distance
     # camera.look_at(cube)  # Always look at the airplane
 
 
+    # camera.rotation = Vec3(30, cube.rotation_y, 0)  # Align camera with the plane's yaw but fix pitch and roll
+    # camera.position = cube.position + Vec3(0, 5, -15)  # Maintain the camera distance from the plane
+
+    # camera.position = cube.position + Vec3(0, 5, -15)  # Camera follows behind the plane
+    # camera.rotation = Vec3(30, cube.rotation_y, 0)  # Keep camera's yaw the same as the plane's rotation (yaw follows plane's turning)
+
+    # camera.position = cube.position + Vec3(0, 5, -15)  # Camera stays behind the plane
+    # camera.rotation = Vec3(30, cube.rotation_y, 0)  # Follow plane's yaw, keep camera's pitch fixed at 30 degrees
+
+    # # Make sure the camera is always looking at the plane
+    # camera.look_at(cube)
+
+
+
+    # camera.rotation_z  = cube.rotation_z
+
+    # camera.rotation = lerp(camera.rotation, cube.rotation, 0.1)  # Adjust 0.1 for speed of smoothing
+    
+    # camera.look_at(cube.position)
 
     if held_keys['escape']:
         exit(code=None)
+
+    
 
 # Run the application
 app.run()
