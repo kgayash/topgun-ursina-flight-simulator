@@ -14,7 +14,7 @@ Pictures of Simulator on Christmas Day, 2024:
 <img width="1680" alt="Screenshot 2024-12-25 at 1 19 17 PM" src="https://github.com/user-attachments/assets/99a62fb0-e659-4ad4-a8dc-428ab34e25bc" />
 
 
-Pictures of Simulator in 2024(This was at the time when I was using a temporary ursina plane model and temporary textured runway, rather than a privately built 3D fighter aircraft model in Blender and a privately built 3D model air base-this will be completed in 2025):
+Pictures of Simulator in 2024 preceding Christmas Eve(This was at the time when I was using a temporary ursina plane model and temporary textured runway, rather than a privately built 3D fighter aircraft model in Blender and a privately built 3D model air base-this will be completed in 2025):
 
 1) Flying View Mode - Parked on Grass
 <img width="1344" alt="image" src="https://github.com/user-attachments/assets/486173e2-952e-41a4-a3ae-4e2d27141761" />
