@@ -3,7 +3,7 @@ High graphic definition 3D tactical gameplay mechanics incorporating separate fu
 
 About:
 
-The Top Gun U.F.S.(Ursina Flight Simulator), is designed to be the first flight simulator in Ursina that incorporates tactical gravity feedback with manual yaw, pitch, and roll controls. The game is developed to be played mainly on a PC, but can additionally can be downloaded and played an a Play Station/Xbox(I prefer this option). However, the game will be sold to private gaming companies, rather than being sold to the public.
+The Top Gun U.F.S.(Ursina Flight Simulator), is designed to be the first flight simulator in Ursina that incorporates tactical gravity feedback with manual yaw, pitch, and roll controls. The game is developed to be played mainly on a PC, but can additionally can be downloaded and played an a Play Station/Xbox(I prefer this option). However, the game will be sold to private gaming companies/coding institutions   , rather than being sold to the public.
 
 Pictures of Simulator on Christmas Day, 2024:
 
