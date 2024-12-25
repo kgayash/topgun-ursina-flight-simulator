@@ -8,14 +8,14 @@ app = Ursina()
 
 # sky = Sky(texture='Sky_gradient_mid_afternoon_looking_north')
 
-# water = Entity(model='plane', scale=(200, 1, 200), position=(0, 0, 0), texture='water', collider='box')
+water = Entity(model='plane', scale=(400, 400, 400), position=(0, -15, 0), texture='water', color = color.blue, collider='box')
 
 
 # clouds = Clouds()
 
 # Create a white cube (player character)
 
-runway = Entity(model='plane', scale=(140, 140, 140), texture="capture.JPG", position=(0, 1, 0), collider='box')
+# runway = Entity(model='plane', scale=(140, 140, 140), texture="capture.JPG", position=(0, 1, 0), collider='box')
 
 # runway.rotation_y = 180
 
@@ -44,34 +44,34 @@ runway = Entity(model='plane', scale=(140, 140, 140), texture="capture.JPG", pos
 #     parking_spots.append(parking_spot)
 
 
-# Create the main body of the airplane (fuselage)
-fuselage = Entity(model='cube', color=color.gray, scale=(2, 0.6, 8), position=(0, 0, 0))
+# # Create the main body of the airplane (fuselage)
+# fuselage = Entity(model='cube', color=color.gray, scale=(2, 0.6, 8), position=(0, 0, 0))
 
-# Create the wings (left and right wings)
-left_wing = Entity(model='cube', color=color.blue, scale=(6, 0.2, 2), position=(-3, 0, 0))
-right_wing = Entity(model='cube', color=color.blue, scale=(6, 0.2, 2), position=(3, 0, 0))
+# # Create the wings (left and right wings)
+# left_wing = Entity(model='cube', color=color.blue, scale=(6, 0.2, 2), position=(-3, 0, 0))
+# right_wing = Entity(model='cube', color=color.blue, scale=(6, 0.2, 2), position=(3, 0, 0))
 
-# Create the tail wing (horizontal stabilizer) - properly connected to the fuselage
-tail_wing = Entity(model='cube', color=color.red, scale=(3, 0.3, 1), position   =(0, 0.5, 4))  # Tail wing connected to fuselage
+# # Create the tail wing (horizontal stabilizer) - properly connected to the fuselage
+# tail_wing = Entity(model='cube', color=color.red, scale=(3, 0.3, 1), position   =(0, 0.5, 4))  # Tail wing connected to fuselage
 
-# Create the vertical stabilizer (rudder) - properly connected to the tail
-vertical_stabilizer = Entity(model='cube', color=color.red, scale=(1, 2, 1), position=(0, 1.25, 5))  # Rudder connected
+# # Create the vertical stabilizer (rudder) - properly connected to the tail
+# vertical_stabilizer = Entity(model='cube', color=color.red, scale=(1, 2, 1), position=(0, 1.25, 5))  # Rudder connected
 
-# Create the engines (two small cylinders representing engines)
-engine_left = Entity(model='cylinder', color=color.orange, scale=(0.5, 0.5, 1.5), position=(-3, 0.3, -4))
-engine_right = Entity(model='cylinder', color=color.orange, scale=(0.5, 0.5, 1.5), position=(3, 0.3, -4))
+# # Create the engines (two small cylinders representing engines)
+# engine_left = Entity(model='cylinder', color=color.orange, scale=(0.5, 0.5, 1.5), position=(-3, 0.3, -4))
+# engine_right = Entity(model='cylinder', color=color.orange, scale=(0.5, 0.5, 1.5), position=(3, 0.3, -4))
 
-# Create the nose cone (small cone at the front)
-nose_cone = Entity(model='cone', color=color.green, scale=(0.7, 0.7, 1), position=(0, 0, -8))
+# # Create the nose cone (small cone at the front)
+# nose_cone = Entity(model='cone', color=color.green, scale=(0.7, 0.7, 1), position=(0, 0, -8))
 
-# Create the landing gear (simple cylinders for wheels)
-# landing_gear_front = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 1), position=(0, -0.2, 3.5))
-# landing_gear_left = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 0.5), position=(-2, -0.2, 4.5))
-# landing_gear_right = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 0.5), position=(2, -0.2, 4.5))
+# # Create the landing gear (simple cylinders for wheels)
+# # landing_gear_front = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 1), position=(0, -0.2, 3.5))
+# # landing_gear_left = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 0.5), position=(-2, -0.2, 4.5))
+# # landing_gear_right = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 0.5), position=(2, -0.2, 4.5))
 
-front_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 1), position=(0, -1.0, 3.5))  # Adjusted Y position
-left_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 0.5), position=(-1.5, -1.0, 3))  # Adjusted Y position
-right_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 0.5), position=(1.5, -1.0, 3))  # Adjusted Y position
+# front_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 1), position=(0, -1.0, 3.5))  # Adjusted Y position
+# left_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 0.5), position=(-1.5, -1.0, 3))  # Adjusted Y position
+# right_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 0.5), position=(1.5, -1.0, 3))  # Adjusted Y position
 
 propeller_blade1 = Entity(
     model='cube', color=color.yellow, scale=(0.2, 2, 0.05), position=(0, 0, 0), rotation=(0, 0, 0)
@@ -83,29 +83,50 @@ propeller_blade2 = Entity(
 # #     model='cube', color=color.yellow, scale=(0.2, 3, 0.05), position=(0, 0, 0), rotation=(-120, 0, 0)
 # )
 
-# Parent the propeller blades to the fuselage (plane body)
+# # Parent the propeller blades to the fuselage (plane body)
 
 
-cube = Entity(parent=scene, position = (-40,2,-30), collider = 'box')
 propeller = Entity(parent=scene, position = (0,0,-4.49))
 propeller_blade1.parent = propeller
 propeller_blade2.parent = propeller
 # propeller_blade3.parent = propeller
 
-propeller.rotation_y = 90
-propeller.parent = cube
-fuselage.parent = cube
-left_wing.parent = cube
-right_wing.parent = cube
-tail_wing.parent = cube
-vertical_stabilizer.parent = cube
-engine_left.parent = cube
-nose_cone.parent = cube
-front_landing_gear.parent = cube
-left_landing_gear.parent = cube
-right_landing_gear.parent = cube
+# propeller.rotation_y = 90
+# propeller.parent = cube
+# fuselage.parent = cube
+# left_wing.parent = cube
+# right_wing.parent = cube
+# tail_wing.parent = cube
+# vertical_stabilizer.parent = cube
+# engine_left.parent = cube
+# nose_cone.parent = cube
+# front_landing_gear.parent = cube
+# left_landing_gear.parent = cube
+# right_landing_gear.parent = cube
 
-# cube = Entity(model='cube', color=color.white, scale=(2, 2, 2), collider='box')
+# f35_body = load_model('f35body.glb')
+# f35body_entity = Entity(model=f35_body, position=(0,10,0), scale=(0.07,0.07,0.07))
+
+# f35_lg = load_model('f35lgears')
+# f35lg_entity = Entity(model=f35_lg)
+
+# cube = Entity(parent=scene, position = (0,10,0), scale=(0.07,0.07,0.07), collider = 'box')
+
+# f35body_entity.parent = cube
+# f35lg_entity.parent = cube
+
+f35 = load_model('f35_fixed.glb')
+
+hg_carrier = load_model('gerald_ford_aircraft_carrier.glb')
+
+hg_entity = Entity(model=hg_carrier, scale = (0.1,0.1,0.1))
+
+# f35_entity = Entity(model=f35, position = (-6,15,6), scale=(0.3,0.3,0.3))
+# f35_entity2 = Entity(model=f35, position = (-6,15,8), scale=(0.5,0.5,0.5))
+
+
+cube = Entity(model='f35', color=color.white, position = (0,15,0), scale=(0.07, 0.07, 0.07), collider='box')
+cube.rotation_y = 90
 
 # Use FirstPersonController for player movement
 player = FirstPersonController()
@@ -118,7 +139,7 @@ player.gravity = 0
 camera.position = (0, 1, -5)
 camera.rotation = (30, 0, 0)
 
-cube.rotation_y = 180
+# cube.rotation_y = 180
 
 turn_speed = 50
 
@@ -146,24 +167,14 @@ vel_text = Text(
     color=color.white  # Set the text color
     )
 
+# runway.collider = 'box'  # You need to add a collider component to the plane
+cube.collider = 'box'
 
 
+# ambient_light = AmbientLight()
+# ambient_light.intensity = 0.1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+cube.rotation_y = -90
 
 
 def update():
@@ -181,7 +192,11 @@ def update():
 
     # global pV_speed
 
-    cube.position -= cube.forward * engine_speed * time.dt 
+    # cube.rotation_y = -90
+
+    cube.position += cube.right * engine_speed * time.dt * 100
+    
+    # cube.rotation_y = -90
 
     roll_velocity = 50
 
@@ -192,8 +207,8 @@ def update():
     if engine_speed == 0:
         cube.gravity = 5
     else:
-        gravity +=  0.4
-        cube.y -= gravity * time.dt * 1.2
+        gravity +=  1
+        cube.y -= gravity * time.dt * 10.8
 
     # cube.position *= engine_speed * time.dtå
 
@@ -201,33 +216,40 @@ def update():
 
     # Code for Fly-By-Wire system
 
-    
+    gravity = 5
+
     # alt_text.Text = ""
     if cube.y >= 2:
         if held_keys['left arrow']:
+
+            cube.rotation_x += 30 * time.dt  # Move up
+            # cube.rotation_y += 40 * time.dt
+            # cube.y += 4 * time.dt
+            # tail_wing.rotation_x -= 0.14
+            
+        if held_keys['right arrow']:
+            
+            
+
+            cube.rotation_x -= 30 * time.dt  # Move down
+            # tail_wing.rotation_x += 0.14
+            # cube.rotation_y -= 40 * time.dt
+            # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
+
+    # if engine_speed >= 10:
+    if held_keys['up arrow']:
+        # roll_velocity += turn_speed * time.dt  # Increase roll velocity
+        cube.rotation_z -= 30 * time.dt  # Move down
+        # left_wing.rotation_x -= -0.12
+        # right_wing.rotation_x -= 0.12
+        # cube.rotation_y -= 40 * time.dt
+    if cube.y >= 2:
+        if held_keys['down arrow']:
+            
             cube.rotation_z += 30 * time.dt  # Move up
             # cube.rotation_y += 40 * time.dt
         #     left_wing.rotation_x -= 0.12
         #     right_wing.rotation_x -= -0.12
-        if held_keys['right arrow']:
-            # roll_velocity += turn_speed * time.dt  # Increase roll velocity
-            cube.rotation_z -= 30 * time.dt  # Move down
-            # left_wing.rotation_x -= -0.12
-            # right_wing.rotation_x -= 0.12
-            # cube.rotation_y -= 40 * time.dt
-
-    if engine_speed >= 10:
-        if held_keys['up arrow']:
-            cube.rotation_x += 5 * time.dt  # Move up
-            # cube.rotation_y += 40 * time.dt
-            # cube.y += 4 * time.dt
-            # tail_wing.rotation_x -= 0.14
-    if cube.y >= 2:
-        if held_keys['down arrow']:
-            cube.rotation_x -= 5 * time.dt  # Move down
-            # tail_wing.rotation_x += 0.14
-            # cube.rotation_y -= 40 * time.dt
-            # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
     if held_keys['c']:
         cube.rotation_y += 30 * time.dt  # Move up
         # cube.rotation_y += 40 * time.dt
