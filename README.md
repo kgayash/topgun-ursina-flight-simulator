@@ -13,4 +13,8 @@ Pictureas of Simulator in 2024(This was at the time when I was using a temporary
 2) Side View Mode - Airborne
 <img width="583" alt="image" src="https://github.com/user-attachments/assets/212dedff-1f3e-49a6-bbc5-7ff003e4d21d" />
 
+3) Flying View Mode - Landing
+<img width="1680" alt="Screenshot 2024-12-24 at 7 35 21 PM" src="https://github.com/user-attachments/assets/cde915ac-4f5c-47e9-9e47-bf18f9e90c2a" />
+
+
 
