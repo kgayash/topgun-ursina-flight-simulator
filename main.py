@@ -1,5 +1,6 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
+from math import radians, sin, cos
 
 
 # Initialize the Ursina application
@@ -14,9 +15,11 @@ app = Ursina()
 
 # Create a white cube (player character)
 
-runway = Entity(model='plane', scale=(5, 1000, 5), color = color.black, position=(0, 1, 0), collider='box')
+runway = Entity(model='plane', scale=(140, 140, 140), texture="capture.JPG", position=(0, 1, 0), collider='box')
 
-# runway.rotation_y = 90
+# runway.rotation_y = 180
+
+# runway.rotation_y = 90 
 
 # globe = Entity(model='sphere', scale=(10000), texture = 'My1nT')
 
@@ -66,9 +69,9 @@ nose_cone = Entity(model='cone', color=color.green, scale=(0.7, 0.7, 1), positio
 # landing_gear_left = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 0.5), position=(-2, -0.2, 4.5))
 # landing_gear_right = Entity(model='cylinder', color=color.black, scale=(0.4, 0.4, 0.5), position=(2, -0.2, 4.5))
 
-front_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(0.4, 0.4, 1), position=(0, -1.0, 3.5))  # Adjusted Y position
-left_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(0.4, 0.4, 0.5), position=(-1.5, -1.0, 3))  # Adjusted Y position
-right_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(0.4, 0.4, 0.5), position=(1.5, -1.0, 3))  # Adjusted Y position
+front_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 1), position=(0, -1.0, 3.5))  # Adjusted Y position
+left_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 0.5), position=(-1.5, -1.0, 3))  # Adjusted Y position
+right_landing_gear = Entity(model='cylinder', color=color.yellow, scale=(10, 10, 0.5), position=(1.5, -1.0, 3))  # Adjusted Y position
 
 propeller_blade1 = Entity(
     model='cube', color=color.yellow, scale=(0.2, 2, 0.05), position=(0, 0, 0), rotation=(0, 0, 0)
@@ -83,7 +86,7 @@ propeller_blade2 = Entity(
 # Parent the propeller blades to the fuselage (plane body)
 
 
-cube = Entity(parent=scene, position = (0,1,0))
+cube = Entity(parent=scene, position = (-40,2,-30), collider = 'box')
 propeller = Entity(parent=scene, position = (0,0,-4.49))
 propeller_blade1.parent = propeller
 propeller_blade2.parent = propeller
@@ -108,11 +111,12 @@ right_landing_gear.parent = cube
 player = FirstPersonController()
 player.entity = player
 player.cursor.scale = 0.000001
-player.gravity = 0  
+player.speed = 30
+player.gravity = 0 
 
 # Set up the camera to follow the player
 camera.position = (0, 1, -5)
-# camera.rotation = (30, 0, 0)
+camera.rotation = (30, 0, 0)
 
 cube.rotation_y = 180
 
@@ -143,7 +147,27 @@ vel_text = Text(
     )
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def update():
+
     engine = 0
     global pV_speed
     global engine_speed # Set move speed 
@@ -161,6 +185,15 @@ def update():
 
     roll_velocity = 50
 
+    gravity = 0
+
+    if engine_speed > 10:
+        cube.gravity = 0
+    if engine_speed == 0:
+        cube.gravity = 5
+    else:
+        gravity +=  0.4
+        cube.y -= gravity * time.dt * 1.2
 
     # cube.position *= engine_speed * time.dtå
 
@@ -170,18 +203,18 @@ def update():
 
     
     # alt_text.Text = ""
-
-    if held_keys['left arrow']:
-        cube.rotation_z += 30 * time.dt  # Move up
-        # cube.rotation_y += 40 * time.dt
-    #     left_wing.rotation_x -= 0.12
-    #     right_wing.rotation_x -= -0.12
-    if held_keys['right arrow']:
-        # roll_velocity += turn_speed * time.dt  # Increase roll velocity
-        cube.rotation_z -= 30 * time.dt  # Move down
-        # left_wing.rotation_x -= -0.12
-        # right_wing.rotation_x -= 0.12
-        # cube.rotation_y -= 40 * time.dt
+    if cube.y >= 2:
+        if held_keys['left arrow']:
+            cube.rotation_z += 30 * time.dt  # Move up
+            # cube.rotation_y += 40 * time.dt
+        #     left_wing.rotation_x -= 0.12
+        #     right_wing.rotation_x -= -0.12
+        if held_keys['right arrow']:
+            # roll_velocity += turn_speed * time.dt  # Increase roll velocity
+            cube.rotation_z -= 30 * time.dt  # Move down
+            # left_wing.rotation_x -= -0.12
+            # right_wing.rotation_x -= 0.12
+            # cube.rotation_y -= 40 * time.dt
 
     if engine_speed >= 10:
         if held_keys['up arrow']:
@@ -189,11 +222,12 @@ def update():
             # cube.rotation_y += 40 * time.dt
             # cube.y += 4 * time.dt
             # tail_wing.rotation_x -= 0.14
-    if held_keys['down arrow']:
-        cube.rotation_x -= 5 * time.dt  # Move down
-        # tail_wing.rotation_x += 0.14
-        # cube.rotation_y -= 40 * time.dt
-        # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
+    if cube.y >= 2:
+        if held_keys['down arrow']:
+            cube.rotation_x -= 5 * time.dt  # Move down
+            # tail_wing.rotation_x += 0.14
+            # cube.rotation_y -= 40 * time.dt
+            # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
     if held_keys['c']:
         cube.rotation_y += 30 * time.dt  # Move up
         # cube.rotation_y += 40 * time.dt
@@ -248,13 +282,15 @@ def update():
     if held_keys['b']:
         if engine_speed > 0:
             engine_speed -= 1 * time.dt * 1.08
+            vel_text.text="Velocity: "+str(round(engine_speed,1))+"knots"
 
-    if engine_speed > 1:
+
+    if engine_speed > 0:
         APU_text.color = color.dark_gray
     # else:
     #     APU_text.enabled = True    
 
-
+    
     if engine_speed > 10:
         takeoff_text = Text(
         text="Velocity above 10knots; ready to rotate for take-off", 
@@ -266,8 +302,11 @@ def update():
         # time.sleep(5)
         # APU_text.text =
 
-    if cube.y > 1:
-        takeoff_text.color = color.dark_gray
+    # if cube.y > 1:
+    #     takeoff_text.color = color.dark_gray
+
+
+    
 
 
 
@@ -280,9 +319,41 @@ def update():
     # Update the cube's position based on its rotation
     # Move the cube forward along its local z-axis
 
-    # camera.position = cube.position + Vec3(0, 5, -40)  # Follow the plane, keep distance
-    # camera.look_at(cube)  # Always look at the airplane
+    camera.position = cube.position + Vec3(0, 5, -20)  # Follow the plane, keep distance
+    camera.look_at(cube)  # Always look at the airplane
 
+    # camera_distance = 15  # The distance the camera will stay in front of the cube
+    # camera_offset = Vec3(0, 5, camera_distance)  # Camera's offset from the cube
+
+    # # # Calculate the camera position based on the cube's yaw (rotation_y)
+    # # camera_x = cube.x + camera_offset.x * cos(radians(cube.rotation_y))
+    # camera_z = cube.z + camera_offset.z * sin(radians(cube.rotation_y))
+
+    # # # Update camera position, keeping it 180 degrees in front of the cube
+    # camera.position = Vec3(camera.x, cube.y + 5, camera_z)
+
+    # # Ensure the camera always looks at the cube
+    # camera.look_at(cube)
+
+    # camera_distance = 15  # The distance the camera will stay behind the cube
+    # camera_offset = Vec3(0, 5, -camera_distance)  # Camera's offset behind the cube (negative Z-axis)
+
+    # camera.rotation_y = 180
+
+    # camera.rotation_x = 90
+
+    # Calculate the camera position based on the cube's yaw (rotation_y)
+    # camera_x = cube.x + camera_offset.x * cos(radians(cube.rotation_y))
+    # camera_z = cube.z + camera_offset.z * sin(radians(cube.rotation_y))
+
+    # Update camera position, keeping it 180 degrees behind the cube
+    # camera.position = Vec3(camera_x, cube.y + 5, camera_z)
+
+    # camera.position = lerp(camera.position, Vec3(camera_x, cube.y + 5, camera_z), 0.1)
+
+
+    # Ensure the camera always looks at the cube
+    # camera.look_at(cube)
 
     # camera.rotation = Vec3(30, cube.rotation_y, 0)  # Align camera with the plane's yaw but fix pitch and roll
     # camera.position = cube.position + Vec3(0, 5, -15)  # Maintain the camera distance from the plane
