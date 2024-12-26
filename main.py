@@ -8,7 +8,7 @@ app = Ursina()
 
 # sky = Sky(texture='Sky_gradient_mid_afternoon_looking_north')
 
-water = Entity(model='plane', scale=(400, 400, 400), position=(0, -15, 0), texture='water', color = color.blue, collider='box')
+# water = Entity(model='plane', scale=(400, 400, 400), position=(0, -15, 0), texture='water', color = color.blue, collider='box')
 
 
 # clouds = Clouds()
@@ -125,8 +125,35 @@ hg_entity = Entity(model=hg_carrier, scale = (0.1,0.1,0.1))
 # f35_entity2 = Entity(model=f35, position = (-6,15,8), scale=(0.5,0.5,0.5))
 
 
-cube = Entity(model='f35', color=color.white, position = (0,15,0), scale=(0.07, 0.07, 0.07), collider='box')
-cube.rotation_y = 90
+cube = Entity(model='f35', color=color.white, position = (0,16.5,0), scale=(0.14, 0.14, 0.14), collider='box')
+
+cube2 = Entity(model='f35', color=color.white, position = (-12,16.5,10), scale=(0.14, 0.14, 0.14), collider='box')
+cube3 = Entity(model='f35', color=color.white, position = (-14.3,16.5,25), scale=(0.14, 0.14, 0.14), collider='box')
+cube4 = Entity(model='f35', color=color.white, position = (-16.6,16.5,40), scale=(0.14, 0.14, 0.14), collider='box')
+cube5 = Entity(model='f35', color=color.white, position = (-18.9,16.5,55), scale=(0.14, 0.14, 0.14), collider='box')
+cube6 = Entity(model='f35', color=color.white, position = (-21.2,16.55,70), scale=(0.14, 0.14, 0.14), collider='box')
+
+cube7 = Entity(model='f35', color=color.white, position = (-52,16.5,-90), scale=(0.14, 0.14, 0.14), collider='box')
+cube8 = Entity(model='f35', color=color.white, position = (-52,16.5,-105), scale=(0.14, 0.14, 0.14), collider='box')
+# cube9 = Entity(model='f35', color=color.white, position = (-45,16.5,-120), scale=(0.14, 0.14, 0.14), collider='box')
+# cube9 = Entity(model='f35', color=color.white, position = (-55,16.5,30), scale=(0.14, 0.14, 0.14), collider='box')
+cube10 = Entity(model='f35', color=color.white, position = (-52,16.5,-75), scale=(0.14, 0.14, 0.14), collider='box')
+# cube11 = Entity(model='f35', color=color.white, position = (21,16.5,-160), scale=(0.14, 0.14, 0.14), collider='box')
+
+# cube11.rotation_y = 150
+
+# cube9.rotation_y = -37
+
+# cube10.rotation_y = -37
+
+# cube11 = Entity(model='f35', color=color.white, position = (-35,16.5,-132), scale=(0.14, 0.14, 0.14), collider='box')
+
+# cube.11 
+
+
+# cube2.rotation_y = 80
+
+cube.rotation_y = -90
 
 # Use FirstPersonController for player movement
 player = FirstPersonController()
@@ -137,7 +164,7 @@ player.gravity = 0
 
 # Set up the camera to follow the player
 camera.position = (0, 1, -5)
-camera.rotation = (30, 0, 0)
+camera.rotation = (30, 90, 0)
 
 # cube.rotation_y = 180
 
@@ -194,6 +221,7 @@ def update():
 
     # cube.rotation_y = -90
 
+    
     cube.position += cube.right * engine_speed * time.dt * 100
     
     # cube.rotation_y = -90
@@ -202,13 +230,17 @@ def update():
 
     gravity = 0
 
-    if engine_speed > 10:
-        cube.gravity = 0
-    if engine_speed == 0:
-        cube.gravity = 5
-    else:
-        gravity +=  1
-        cube.y -= gravity * time.dt * 10.8
+    if cube.y == 15:
+        gravity = 0
+
+
+    # if engine_speed > 10:
+    #     cube.gravity = 0
+    # if engine_speed == 0 and cube.y > 15:
+    #     cube.gravity = 5
+    # else:
+    #     gravity +=  1
+    #     cube.y -= gravity * time.dt * 10.8
 
     # cube.position *= engine_speed * time.dtå
 
@@ -219,7 +251,7 @@ def update():
     gravity = 5
 
     # alt_text.Text = ""
-    if cube.y >= 2:
+    if cube.y >= 17:
         if held_keys['left arrow']:
 
             cube.rotation_x += 30 * time.dt  # Move up
@@ -236,11 +268,11 @@ def update():
             # cube.rotation_y -= 40 * time.dt
             # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
 
-    # if engine_speed >= 10:
     if held_keys['up arrow']:
-        # roll_velocity += turn_speed * time.dt  # Increase roll velocity
-        cube.rotation_z -= 30 * time.dt  # Move down
-        # left_wing.rotation_x -= -0.12
+        cube.rotation_z -= 30 * time.dt  # Move up
+
+    
+
         # right_wing.rotation_x -= 0.12
         # cube.rotation_y -= 40 * time.dt
     if cube.y >= 2:
@@ -341,8 +373,8 @@ def update():
     # Update the cube's position based on its rotation
     # Move the cube forward along its local z-axis
 
-    camera.position = cube.position + Vec3(0, 5, -20)  # Follow the plane, keep distance
-    camera.look_at(cube)  # Always look at the airplane
+    # camera.position = cube.position + Vec3(0, 5, -20)  # Follow the plane, keep distance
+    # camera.look_at(cube)  # Always look at the airplane
 
     # camera_distance = 15  # The distance the camera will stay in front of the cube
     # camera_offset = Vec3(0, 5, camera_distance)  # Camera's offset from the cube
@@ -391,7 +423,7 @@ def update():
 
 
 
-    # camera.rotation_z  = cube.rotation_z
+    # camera.rotation_y  = cube.rotation_y/2.8
 
     # camera.rotation = lerp(camera.rotation, cube.rotation, 0.1)  # Adjust 0.1 for speed of smoothing
     
