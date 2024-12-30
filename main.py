@@ -1,6 +1,7 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from math import radians, sin, cos
+from ursina import collider
 
 
 # Initialize the Ursina application
@@ -121,11 +122,21 @@ hg_carrier = load_model('gerald_ford_aircraft_carrier.glb')
 
 hg_entity = Entity(model=hg_carrier, scale = (0.1,0.1,0.1))
 
+
+
+
 # f35_entity = Entity(model=f35, position = (-6,15,6), scale=(0.3,0.3,0.3))
 # f35_entity2 = Entity(model=f35, position = (-6,15,8), scale=(0.5,0.5,0.5))
 
 
 cube = Entity(model='f35', color=color.white, position = (0,16.5,0), scale=(0.14, 0.14, 0.14), collider='box')
+
+# cube.collider = 'box'  # Simple box collider around the plane
+# hg_entity.collider = 'box'  # Simple box collider around the second model
+
+# # Add gravity or physics if needed (optional, depending on your setup)
+# cube.add_component(Rigidbody)  # For physics-based objects (like falling)
+# hg_carrier.add_component(Physics)  # For the second object
 
 cube2 = Entity(model='f35', color=color.white, position = (-12,16.5,10), scale=(0.14, 0.14, 0.14), collider='box')
 cube3 = Entity(model='f35', color=color.white, position = (-14.3,16.5,25), scale=(0.14, 0.14, 0.14), collider='box')
@@ -220,6 +231,15 @@ vel_text = Text(
     color=color.white  # Set the text color
     )
 
+# vSpeed_text = Text(
+#     text="Velocity: "+str(engine_speed)+"kmph", 
+#     # origin=(1, 1),  # The origin is the point of reference for positioning (top-right corner)
+#     position=(0.012,0.024),  # Position it in the right top corner (relative to screen size)
+#     scale=0.06,  # Adjust the text size
+#     color=color.white  # Set the text color
+#     )
+
+
 # runway.collider = 'box'  # You need to add a collider component to the plane
 cube.collider = 'box'
 
@@ -256,17 +276,20 @@ def update():
 
     gravity = 0
 
-    if cube.y == 15:
+    # if cube.y == 16.5:
+    #     cube.y = 16.5
+
+    if abs(cube.y - 16.5) < 0.01:
+        cube.y = 16.5  # This won't cause unnecessary updates
+
+
+    if engine_speed > 10:
         cube.gravity = 0
-
-
-    # if engine_speed > 10:
-    #     cube.gravity = 0
-    # if engine_speed == 0 and cube.y > 15:
-    #     cube.gravity = 5
-    # else:
-    #     gravity +=  1
-    #     cube.y -= gravity * time.dt * 10.8
+    if engine_speed == 0 and cube.y > 15:
+        cube.gravity = 5
+    else:
+        gravity +=  1
+        cube.y -= gravity * time.dt * 10.8
 
     # cube.position *= engine_speed * time.dtå
 
