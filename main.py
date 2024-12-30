@@ -133,14 +133,40 @@ cube4 = Entity(model='f35', color=color.white, position = (-16.6,16.5,40), scale
 cube5 = Entity(model='f35', color=color.white, position = (-18.9,16.5,55), scale=(0.14, 0.14, 0.14), collider='box')
 cube6 = Entity(model='f35', color=color.white, position = (-21.2,16.55,70), scale=(0.14, 0.14, 0.14), collider='box')
 
-cube7 = Entity(model='f35', color=color.white, position = (-52,16.5,-90), scale=(0.14, 0.14, 0.14), collider='box')
-cube8 = Entity(model='f35', color=color.white, position = (-52,16.5,-105), scale=(0.14, 0.14, 0.14), collider='box')
+cube2.rotation_y = 30
+cube3.rotation_y = 30
+
+cube4.rotation_y = 30
+cube5.rotation_y = 30
+cube6.rotation_y = 30
+
+
+cube7 = Entity(model='f35', color=color.white, position = (-52,16.5,-100), scale=(0.14, 0.14, 0.14), collider='box')
+cube8 = Entity(model='f35', color=color.white, position = (-48.7,16.5,-120), scale=(0.14, 0.14, 0.14), collider='box')
 # cube9 = Entity(model='f35', color=color.white, position = (-45,16.5,-120), scale=(0.14, 0.14, 0.14), collider='box')
 # cube9 = Entity(model='f35', color=color.white, position = (-55,16.5,30), scale=(0.14, 0.14, 0.14), collider='box')
-cube10 = Entity(model='f35', color=color.white, position = (-52,16.5,-75), scale=(0.14, 0.14, 0.14), collider='box')
-# cube11 = Entity(model='f35', color=color.white, position = (21,16.5,-160), scale=(0.14, 0.14, 0.14), collider='box')
+cube10 = Entity(model='f35', color=color.white, position = (-52,16.5,-85), scale=(0.14, 0.14, 0.14), collider='box')
+cube13 = Entity(model='f35', color=color.white, position = (-52,16.5,-70), scale=(0.14, 0.14, 0.14), collider='box')
 
-# cube11.rotation_y = 150
+# cube11 = Entity(model='f35', color=color.white, position = (47,16.5,148), scale=(0.14, 0.14, 0.14), collider='box')
+# cube12 = Entity(model='f35', color=color.white, position = (47,16.5,166), scale=(0.14, 0.14, 0.14), collider='box')
+
+cube14 = Entity(model='f35', color=color.white, position = (-52,16.5,-30), scale=(0.14, 0.14, 0.14), collider='box')
+cube15 = Entity(model='f35', color=color.white, position = (-52,16.5,-23), scale=(0.14, 0.14, 0.14), collider='box')
+
+
+# cube12 = Entity(model='f35', color=color.white, position = (23,16.5,-185), scale=(0.14, 0.14, 0.14), collider='box')
+# cube13 = Entity(model='f35', color=color.white, position = (23,16.5,-215), scale=(0.14, 0.14, 0.14), collider='box')
+# cube14 = Entity(model='f35', color=color.white, position = (23,16.5,-240), scale=(0.14, 0.14, 0.14), collider='box')
+
+
+# cube11.rotation_y = 180
+
+# cube12.rotation_y = 180
+
+cube8.rotation_y = -28
+
+# cube14.rotation_y = 90
 
 # cube9.rotation_y = -37
 
@@ -231,7 +257,7 @@ def update():
     gravity = 0
 
     if cube.y == 15:
-        gravity = 0
+        cube.gravity = 0
 
 
     # if engine_speed > 10:
@@ -373,8 +399,8 @@ def update():
     # Update the cube's position based on its rotation
     # Move the cube forward along its local z-axis
 
-    # camera.position = cube.position + Vec3(0, 5, -20)  # Follow the plane, keep distance
-    # camera.look_at(cube)  # Always look at the airplane
+    camera.position = cube.position + Vec3(0, 5, -20)  # Follow the plane, keep distance
+    camera.look_at(cube)  # Always look at the airplane
 
     # camera_distance = 15  # The distance the camera will stay in front of the cube
     # camera_offset = Vec3(0, 5, camera_distance)  # Camera's offset from the cube
