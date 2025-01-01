@@ -116,11 +116,18 @@ propeller_blade2.parent = propeller
 # f35body_entity.parent = cube
 # f35lg_entity.parent = cube
 
-f35 = load_model('f35_fixed.glb')
+f35 = load_model('f35body_fixed4.glb')
 
 hg_carrier = load_model('gerald_ford_aircraft_carrier.glb')
 
 hg_entity = Entity(model=hg_carrier, scale = (0.1,0.1,0.1))
+
+f35gears = load_model('f35landinggear_fixed.glb')
+
+lg = Entity(model=f35gears, position = (-14.9,7,5), scale=(1, 1, 1))
+
+lg.rotation_y = -90
+
 
 
 
@@ -129,7 +136,7 @@ hg_entity = Entity(model=hg_carrier, scale = (0.1,0.1,0.1))
 # f35_entity2 = Entity(model=f35, position = (-6,15,8), scale=(0.5,0.5,0.5))
 
 
-cube = Entity(model='f35', color=color.white, position = (0,16.5,0), scale=(0.14, 0.14, 0.14), collider='box')
+cube = Entity(model=f35, position = (0,16.5,0), scale=(1, 1, 1), collider='box')
 
 # cube.collider = 'box'  # Simple box collider around the plane
 # hg_entity.collider = 'box'  # Simple box collider around the second model
@@ -268,7 +275,7 @@ def update():
     # cube.rotation_y = -90
 
     
-    cube.position += cube.right * engine_speed * time.dt * 100
+    cube.position -= cube.right * engine_speed * time.dt * 100
     
     # cube.rotation_y = -90
 
@@ -303,7 +310,7 @@ def update():
     if cube.y >= 17:
         if held_keys['left arrow']:
 
-            cube.rotation_x += 30 * time.dt  # Move up
+            cube.rotation_x -= 30 * time.dt  # Move up
             # cube.rotation_y += 40 * time.dt
             # cube.y += 4 * time.dt
             # tail_wing.rotation_x -= 0.14
@@ -312,7 +319,7 @@ def update():
             
             
 
-            cube.rotation_x -= 30 * time.dt  # Move down
+            cube.rotation_x += 30 * time.dt  # Move down
             # tail_wing.rotation_x += 0.14
             # cube.rotation_y -= 40 * time.dt
             # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
@@ -367,7 +374,7 @@ def update():
 
     if pV_speed > 500:
         APU_text = Text(
-        text="APU start completed; propeller at sufficient speed to taxi", 
+        text="APU start completed; engine at sufficient speed to taxi", 
         # origin=(1, 1),  # The origin is the point of reference for positioning (top-right corner)
         position=(-0.0195,0.01),  # Position it in the right top corner (relative to screen size)
         scale=0.06,  # Adjust the text size
