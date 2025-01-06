@@ -5,7 +5,10 @@ from ursina import collider
 
 
 # Initialize the Ursina application
-app = Ursina()
+# app = Ursina()
+
+app = Ursina(size=(1700, 1000))  # Set the window size to 800x600
+
 
 # sky = Sky(texture='Sky_gradient_mid_afternoon_looking_north')
 
@@ -116,18 +119,25 @@ propeller_blade2.parent = propeller
 # f35body_entity.parent = cube
 # f35lg_entity.parent = cube
 
-f35 = load_model('f35body_fixed4.glb')
+f35 = load_model('f35_fixed.glb')
+
+f35up = load_model('f35landinggear_fixed4.glb')
 
 hg_carrier = load_model('gerald_ford_aircraft_carrier.glb')
 
 hg_entity = Entity(model=hg_carrier, scale = (0.1,0.1,0.1))
 
-f35gears = load_model('f35landinggear_fixed.glb')
+# missile1 = Entity(model = 'cube', color = color.yellow, scale = (0.2,0.2,3), position = (0,16.5,11))
+# missile2 = Entity(model = 'cube', color = color.yellow, scale = (0.2,0.2,3), position = (0,16.5,-11))
 
-lg = Entity(model=f35gears, position = (-14.9,7,5), scale=(1, 1, 1))
 
-lg.rotation_y = -90
+# f35gears = load_model('f35landinggear_fixed.glb')
 
+# lg = Entity(model=f35gears, position = (-14.9,7,5), scale=(1, 1, 1))
+
+# lg.rotation_y = -90
+
+# f35.parent = y
 
 
 
@@ -136,7 +146,16 @@ lg.rotation_y = -90
 # f35_entity2 = Entity(model=f35, position = (-6,15,8), scale=(0.5,0.5,0.5))
 
 
-cube = Entity(model=f35, position = (0,16.5,0), scale=(1, 1, 1), collider='box')
+cube = Entity(model=f35, position = (0,16.5,0), scale=(0.84, 0.84, 0.84), collider='box')
+# cube = Entity()
+# f35.parent = cube
+# missile1.parent = cube
+# missile2.parent = cube
+# missile1.rotation_y = 90
+# missile1.rotation_y = 90
+
+
+cube.rotation_y = 180
 
 # cube.collider = 'box'  # Simple box collider around the plane
 # hg_entity.collider = 'box'  # Simple box collider around the second model
@@ -254,7 +273,8 @@ cube.collider = 'box'
 # ambient_light = AmbientLight()
 # ambient_light.intensity = 0.1
 
-cube.rotation_y = -90
+
+cube.rottion_y =  -90
 
 
 def update():
@@ -325,16 +345,16 @@ def update():
             # cube.y += math.cos(math.radians(cube.rotation_y)) * engine_speed * time.dt
 
     if held_keys['up arrow']:
-        cube.rotation_z -= 30 * time.dt  # Move up
+        cube.rotation_z += 30 * time.dt  # Move up
 
     
 
         # right_wing.rotation_x -= 0.12
         # cube.rotation_y -= 40 * time.dt
-    if cube.y >= 2:
-        if held_keys['down arrow']:
+    # if cube.y >= 2:
+    if held_keys['down arrow']:
             
-            cube.rotation_z += 30 * time.dt  # Move up
+        cube.rotation_z -= 30 * time.dt  # Move up
             # cube.rotation_y += 40 * time.dt
         #     left_wing.rotation_x -= 0.12
         #     right_wing.rotation_x -= -0.12
@@ -414,6 +434,10 @@ def update():
 
     # if cube.y > 1:
     #     takeoff_text.color = color.dark_gray
+
+    if held_keys['l']:
+        cube.model = f35up
+        cube.scale = (3,3,3)
 
 
     
