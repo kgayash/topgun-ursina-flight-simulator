@@ -10,7 +10,12 @@ from ursina import collider
 app = Ursina(size=(1700, 1000))  # Set the window size to 800x600
 
 
-# sky = Sky(texture='Sky_gradient_mid_afternoon_looking_north')
+# sky = Sky(model = 'plane', scale = (2000,2000,2000), position =  (0,0,0))
+
+ah = Entity(model = 'plane', texture = '66eEH.png', scale = (2), position = (0,0,0))
+# ah.rotation_z = 90
+# ah.rotation_y = 90
+ah.rotation_x = -90
 
 # water = Entity(model='plane', scale=(400, 400, 400), position=(0, -15, 0), texture='water', color = color.blue, collider='box')
 
@@ -283,6 +288,12 @@ def update():
     global pV_speed
     global engine_speed # Set move speed 
     propeller.rotation_x += pV_speed * time.dt
+
+    screen_width, screen_height = window.size
+
+    
+    # Position the entity at the top-right corner
+    ah.position = Vec2(screen_width / 2 - 0.1, screen_height / 2 - 0.1)
     # roll_decay = 60
 
     if held_keys['v']:
